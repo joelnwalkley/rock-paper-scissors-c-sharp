@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 namespace RockPaperScissors;
 
 public class GamerRunner
@@ -64,20 +62,30 @@ public class GamerRunner
             Console.WriteLine("It's a tie!");
             return true;
         }
-        
-        var winningChoices = new Dictionary<Choices, Choices>
+
+        var outcomes = new List<Outcome>
         {
-            {Choices.Rock, Choices.Scissors},
-            {Choices.Scissors, Choices.Paper},
-            {Choices.Paper, Choices.Rock}
+            new Outcome(Choices.Rock, Choices.Scissors, "Rock crushes Scissors"),
+            new Outcome(Choices.Scissors, Choices.Paper, "Scissors cut Paper"),
+            new Outcome(Choices.Paper, Choices.Rock, "Paper covers Rock")
         };
-        
-        if (winningChoices[_playerList[0].Choice] == _playerList[1].Choice)
+
+        foreach (var outcome in outcomes)
         {
-            Console.WriteLine($"{_playerList[0].Name} wins!");
-            return false;
+            if (outcome.Winner == _playerList[0].Choice && outcome.Loser == _playerList[1].Choice)
+            {
+                Console.WriteLine(outcome.Reason);
+                Console.WriteLine($"{_playerList[0].Name} wins!");
+                return false;
+            } 
+            if (outcome.Winner == _playerList[1].Choice && outcome.Loser == _playerList[0].Choice)
+            {
+                Console.WriteLine(outcome.Reason);
+                Console.WriteLine($"{_playerList[1].Name} wins!");
+                return false;
+            }
         }
-        Console.WriteLine($"{_playerList[1].Name} wins!");
+
         return false;
     }
 }
