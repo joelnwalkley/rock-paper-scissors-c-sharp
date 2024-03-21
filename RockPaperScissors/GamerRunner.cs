@@ -22,17 +22,33 @@ public class GamerRunner
 
     public void Run()
     {
-        var isTie = Judge();
-
-        while (isTie)
+        while (true)
         {
-            foreach (var player in _playerList)
+            var isTie = Judge();
+
+            while (isTie)
             {
-                player.Choose();
+                foreach (var player in _playerList)
+                {
+                    player.Choose();
+                }
+
+                isTie = Judge();
             }
-            isTie = Judge();
+
+            Console.Write("Play again? (Y/N): ");
+            var playAgain = Console.ReadLine();
+            if (playAgain?.ToUpper() is "Y")
+            {
+                foreach (var player in _playerList)
+                {
+                    player.Choose();
+                }
+                continue;
+            }
+
+            break;
         }
-        
     }
 
     private bool Judge()
