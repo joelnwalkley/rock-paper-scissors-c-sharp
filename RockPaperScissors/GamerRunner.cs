@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace RockPaperScissors;
 
 public class GamerRunner
@@ -48,29 +50,26 @@ public class GamerRunner
         }
         
         // rock beats scissors, scissors beats paper, paper beats rock
+        // var winningChoices = new Dictionary<Choices, Choices>
+        // {
+        //     {Choices.Rock, Choices.Scissors},
+        //     {Choices.Scissors, Choices.Paper},
+        //     {Choices.Paper, Choices.Rock}
+        // };
+        
+        var winningChoices = new Dictionary<string, string>
+        {
+            {"Rock", "Scissors"},
+            {"Scissors", "Paper"},
+            {"Paper", "Rock"}
+        };
        
-
-        Console.WriteLine("there is a winner, I just don't know which one yet...");
+        if (winningChoices[_playerList[0].Choice!] == _playerList[1].Choice)
+        {
+            Console.WriteLine($"{_playerList[0].Name} wins!");
+            return false;
+        }
+        Console.WriteLine($"{_playerList[1].Name} wins!");
         return false;
-        // else if (_playerList[0].Choice == "Rock" && _playerList[1].Choice == "Scissors")
-        // {
-        //     Console.WriteLine($"{_playerList[0].Name} wins!");
-        //     return true;
-        // }
-        // else if (_playerList[0].Choice == "Paper" && _playerList[1].Choice == "Rock")
-        // {
-        //     Console.WriteLine($"{_playerList[0].Name} wins!");
-        //     return true;
-        // }
-        // else if (_playerList[0].Choice == "Scissors" && _playerList[1].Choice == "Paper")
-        // {
-        //     Console.WriteLine($"{_playerList[0].Name} wins!");
-        //     return true;
-        // }
-        // else
-        // {
-        //     Console.WriteLine($"{_playerList[1].Name} wins!");
-        //     return true;
-        // }
     }
 }
