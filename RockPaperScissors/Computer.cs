@@ -1,7 +1,6 @@
 namespace RockPaperScissors;
 
-// Computer extends the abstract class Player
-public class Computer(string name) : Player(name)
+public class Computer() : Player("Computer")
 {
     public override void Choose()
     {
