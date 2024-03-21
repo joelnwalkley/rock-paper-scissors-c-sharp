@@ -19,5 +19,11 @@ public class GamerRunner
             player.SetName();
             player.Choose();
         }
+        
+        // must be a separate loop, otherwise choices may be revealed too early
+        foreach (var player in _playerList)
+        {
+            player.StateChoice();
+        }
     }
 }
