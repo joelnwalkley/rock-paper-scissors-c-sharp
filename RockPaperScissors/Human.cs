@@ -1,7 +1,7 @@
 namespace RockPaperScissors;
 
 // class Human extends Player
-public class Human(string name) : Player(name)
+public class Human() : Player()
 {
     public override void Choose()
     {
@@ -24,5 +24,11 @@ public class Human(string name) : Player(name)
         //         // Choose();
         //         Choose();
         //     }
+    }
+
+    public override void SetName()
+    {
+        Console.Write("Enter your name: ");
+        Name = Console.ReadLine();
     }
 }

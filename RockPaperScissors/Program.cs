@@ -2,14 +2,13 @@
 
 using RockPaperScissors;
 
-Console.WriteLine("Hello, World!");
-
 var computerPlayer = new Computer();
-var humanPlayer = new Human("Human");
+var humanPlayer = new Human();
 
 var playerList = new List<Player> { computerPlayer, humanPlayer };
 foreach (var player in playerList)
 {
+    player.SetName();
     player.Choose();
 }
 
