@@ -49,22 +49,14 @@ public class GamerRunner
             return true;
         }
         
-        // rock beats scissors, scissors beats paper, paper beats rock
-        // var winningChoices = new Dictionary<Choices, Choices>
-        // {
-        //     {Choices.Rock, Choices.Scissors},
-        //     {Choices.Scissors, Choices.Paper},
-        //     {Choices.Paper, Choices.Rock}
-        // };
-        
-        var winningChoices = new Dictionary<string, string>
+        var winningChoices = new Dictionary<Choices, Choices>
         {
-            {"Rock", "Scissors"},
-            {"Scissors", "Paper"},
-            {"Paper", "Rock"}
+            {Choices.Rock, Choices.Scissors},
+            {Choices.Scissors, Choices.Paper},
+            {Choices.Paper, Choices.Rock}
         };
-       
-        if (winningChoices[_playerList[0].Choice!] == _playerList[1].Choice)
+        
+        if (winningChoices[_playerList[0].Choice] == _playerList[1].Choice)
         {
             Console.WriteLine($"{_playerList[0].Name} wins!");
             return false;

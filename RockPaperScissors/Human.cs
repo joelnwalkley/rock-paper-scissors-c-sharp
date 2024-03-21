@@ -11,7 +11,7 @@ public class Human() : Player()
             var input = Console.ReadLine();
             if (input is "Rock" or "Paper" or "Scissors")
             {
-                Choice = input;
+                Choice = Enum.Parse<Choices>(input);
             }
             else
             {
