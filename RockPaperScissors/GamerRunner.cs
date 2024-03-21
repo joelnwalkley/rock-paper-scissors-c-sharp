@@ -34,10 +34,11 @@ public class GamerRunner
                 isTie = Judge();
             }
 
-            Console.Write("Play again? (Y/N): ");
-            var playAgain = Console.ReadLine();
-            if (playAgain?.ToUpper() is "Y")
+            Console.Write("Play again? (Y/n): ");
+            var playAgain = Console.ReadKey().Key;
+            if (playAgain is ConsoleKey.Y or ConsoleKey.Enter)
             {
+                Console.WriteLine();
                 foreach (var player in _playerList)
                 {
                     player.Choose();
@@ -65,9 +66,9 @@ public class GamerRunner
 
         var outcomes = new List<Outcome>
         {
-            new Outcome(Choices.Rock, Choices.Scissors, "Rock crushes Scissors"),
-            new Outcome(Choices.Scissors, Choices.Paper, "Scissors cut Paper"),
-            new Outcome(Choices.Paper, Choices.Rock, "Paper covers Rock")
+            new (Choices.Rock, Choices.Scissors, "Rock crushes Scissors"),
+            new (Choices.Scissors, Choices.Paper, "Scissors cut Paper"),
+            new (Choices.Paper, Choices.Rock, "Paper covers Rock")
         };
 
         foreach (var outcome in outcomes)
@@ -76,14 +77,11 @@ public class GamerRunner
             {
                 Console.WriteLine(outcome.Reason);
                 Console.WriteLine($"{_playerList[0].Name} wins!");
-                return false;
-            } 
-            if (outcome.Winner == _playerList[1].Choice && outcome.Loser == _playerList[0].Choice)
-            {
-                Console.WriteLine(outcome.Reason);
-                Console.WriteLine($"{_playerList[1].Name} wins!");
-                return false;
             }
+
+            if (outcome.Winner != _playerList[1].Choice || outcome.Loser != _playerList[0].Choice) continue;
+            Console.WriteLine(outcome.Reason);
+            Console.WriteLine($"{_playerList[1].Name} wins!");
         }
 
         return false;
