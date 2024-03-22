@@ -6,7 +6,7 @@ public class Computer() : Player()
     {
         var random = new Random();
         var choice = random.Next(0, 3);
-        Choice = (Choices)choice;
+        Choice = (Choice)choice;
     }
 
     public override void SetName()

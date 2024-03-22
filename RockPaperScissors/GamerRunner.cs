@@ -66,9 +66,9 @@ public class GamerRunner
 
         var outcomes = new List<Outcome>
         {
-            new (Choices.Rock, Choices.Scissors, "Rock crushes Scissors"),
-            new (Choices.Scissors, Choices.Paper, "Scissors cut Paper"),
-            new (Choices.Paper, Choices.Rock, "Paper covers Rock")
+            new (Choice.Rock, Choice.Scissors, "Rock crushes Scissors"),
+            new (Choice.Scissors, Choice.Paper, "Scissors cut Paper"),
+            new (Choice.Paper, Choice.Rock, "Paper covers Rock")
         };
 
         foreach (var outcome in outcomes)

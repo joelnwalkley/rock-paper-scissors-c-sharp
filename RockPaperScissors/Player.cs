@@ -4,7 +4,7 @@ public abstract class Player()
 {
 
     public string? Name { get; protected set; }
-    public Choices Choice { get; protected set; }
+    public Choice Choice { get; protected set; }
 
     public abstract void Choose();
     
