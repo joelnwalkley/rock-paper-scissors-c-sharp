@@ -1,6 +1,6 @@
 namespace RockPaperScissors;
 
-public enum Choices
+public enum Choice
 {
     Rock = 0,
     Paper = 1,

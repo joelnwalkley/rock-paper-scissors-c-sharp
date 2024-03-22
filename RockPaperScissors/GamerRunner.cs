@@ -1,10 +1,20 @@
 namespace RockPaperScissors;
 
+/// <summary>
+/// Engine that runs the bus.
+/// </summary>
 public class GamerRunner
 {
     private readonly List<Player> _playerList = [];
+    private readonly List<Outcome> _outcomes;
+
+    /// <summary>
+    /// Default Constructor.
+    /// </summary>
     public GamerRunner()
     {
+        // Setup readonly variables
+
         var computerPlayer = new Computer();
         var humanPlayer = new Human();
         
@@ -14,42 +24,76 @@ public class GamerRunner
         foreach (var player in _playerList)
         {
             player.SetName();
-            player.Choose();
         }
+
+        _outcomes = new List<Outcome>
+        {
+            new (Choice.Rock, Choice.Scissors, "Rock crushes Scissors"),
+            new (Choice.Scissors, Choice.Paper, "Scissors cut Paper"),
+            new (Choice.Paper, Choice.Rock, "Paper covers Rock")
+        };
     }
 
+    /// <summary>
+    /// Run the game.
+    /// </summary>
     public void Run()
     {
-        while (true)
+        var continueGame = true;
+        while (continueGame)
         {
+            Play();
             var isTie = Judge();
 
             while (isTie)
             {
-                foreach (var player in _playerList)
-                {
-                    player.Choose();
-                }
+                Play();
 
                 isTie = Judge();
             }
-
             Console.Write("Play again? (Y/n): ");
-            var playAgain = Console.ReadKey().Key;
-            if (playAgain is ConsoleKey.Y or ConsoleKey.Enter)
-            {
-                Console.WriteLine();
-                foreach (var player in _playerList)
-                {
-                    player.Choose();
-                }
-                continue;
-            }
+            continueGame = ReplayCheck();
+        }
+        Console.WriteLine("Game Over");
+    }
 
-            break;
+    /// <summary>
+    /// Recursive method to check if user wants to continue.
+    /// </summary>
+    /// <returns>Bool value on whether or not to break the loop.</returns>
+    private bool ReplayCheck()
+    {
+        var playAgain = Console.ReadKey().Key;
+        switch (playAgain)
+        {
+            case ConsoleKey.Y:
+                Console.WriteLine(); // formatting
+                return true;
+            case ConsoleKey.Enter:
+                return true;
+            case ConsoleKey.N: // explicitly stop
+                Console.WriteLine(); // formatting
+                return false;
+            default: // any other key
+                return ReplayCheck();
         }
     }
 
+    /// <summary>
+    /// Repeated action of having the players execute <see cref="Player.Choose()"/>. reduced to a private method to keep code DRY.
+    /// </summary>
+    private void Play()
+    {
+        foreach (var player in _playerList)
+        {
+            player.Choose();
+        }
+    }
+
+    /// <summary>
+    /// Determine who the winner is or declare a tie.
+    /// </summary>
+    /// <returns>True if a tie. False otherwise.</returns>
     private bool Judge()
     {
         foreach (var player in _playerList)
@@ -64,24 +108,19 @@ public class GamerRunner
             return true;
         }
 
-        var outcomes = new List<Outcome>
-        {
-            new (Choices.Rock, Choices.Scissors, "Rock crushes Scissors"),
-            new (Choices.Scissors, Choices.Paper, "Scissors cut Paper"),
-            new (Choices.Paper, Choices.Rock, "Paper covers Rock")
-        };
-
-        foreach (var outcome in outcomes)
+        foreach (var outcome in _outcomes)
         {
             if (outcome.Winner == _playerList[0].Choice && outcome.Loser == _playerList[1].Choice)
             {
                 Console.WriteLine(outcome.Reason);
                 Console.WriteLine($"{_playerList[0].Name} wins!");
+                return false; // If we're done, we can leave the loop.
             }
 
             if (outcome.Winner != _playerList[1].Choice || outcome.Loser != _playerList[0].Choice) continue;
             Console.WriteLine(outcome.Reason);
             Console.WriteLine($"{_playerList[1].Name} wins!");
+            return false;
         }
 
         return false;
